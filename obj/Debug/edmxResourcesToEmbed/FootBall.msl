@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FIFAModelStoreContainer" CdmEntityContainer="FIFAEntities">
+    <EntitySetMapping Name="FootBallLeagues">
+      <EntityTypeMapping TypeName="FIFAModel.FootBallLeague">
+        <MappingFragment StoreEntitySet="FootBallLeague">
+          <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+          <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+          <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+          <ScalarProperty Name="MatchStatus" ColumnName="MatchStatus" />
+          <ScalarProperty Name="WinningTeam" ColumnName="WinningTeam" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Match_View">
+      <EntityTypeMapping TypeName="FIFAModel.Match_View">
+        <MappingFragment StoreEntitySet="Match_View">
+          <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+          <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spGetFootBallLeague" FunctionName="FIFAModel.Store.spGetFootBallLeague">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FIFAModel.spGetFootBallLeague_Result">
+          <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+          <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+          <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+          <ScalarProperty Name="MatchStatus" ColumnName="MatchStatus" />
+          <ScalarProperty Name="WinningTeam" ColumnName="WinningTeam" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

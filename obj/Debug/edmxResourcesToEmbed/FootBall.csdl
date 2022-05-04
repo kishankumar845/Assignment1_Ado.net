@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FIFAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="FootBallLeague">
+    <Key>
+      <PropertyRef Name="MatchID" />
+    </Key>
+    <Property Name="MatchID" Type="Int32" Nullable="false" />
+    <Property Name="TeamName1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TeamName2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MatchStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="WinningTeam" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Points" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Match_View">
+    <Key>
+      <PropertyRef Name="TeamName1" />
+      <PropertyRef Name="TeamName2" />
+    </Key>
+    <Property Name="TeamName1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TeamName2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="FIFAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FootBallLeagues" EntityType="Self.FootBallLeague" />
+    <EntitySet Name="Match_View" EntityType="Self.Match_View" />
+    <FunctionImport Name="spGetFootBallLeague" ReturnType="Collection(FIFAModel.spGetFootBallLeague_Result)" />
+  </EntityContainer>
+  <ComplexType Name="spGetFootBallLeague_Result">
+    <Property Type="Int32" Name="MatchID" Nullable="false" />
+    <Property Type="String" Name="TeamName1" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="TeamName2" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="MatchStatus" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="WinningTeam" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="Points" Nullable="true" />
+  </ComplexType>
+</Schema>

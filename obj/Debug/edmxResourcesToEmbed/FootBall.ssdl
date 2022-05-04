@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FIFAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FootBallLeague">
+    <Key>
+      <PropertyRef Name="MatchID" />
+    </Key>
+    <Property Name="MatchID" Type="int" Nullable="false" />
+    <Property Name="TeamName1" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TeamName2" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="MatchStatus" Type="varchar" MaxLength="30" />
+    <Property Name="WinningTeam" Type="varchar" MaxLength="30" />
+    <Property Name="Points" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'FIFA.dbo.Match_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Match_View">
+    <Key>
+      <PropertyRef Name="TeamName1" />
+      <PropertyRef Name="TeamName2" />
+    </Key>
+    <Property Name="TeamName1" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TeamName2" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <Function Name="spGetFootBallLeague" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="FIFAModelStoreContainer">
+    <EntitySet Name="FootBallLeague" EntityType="Self.FootBallLeague" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Match_View" EntityType="Self.Match_View" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Match_View].[TeamName1] AS [TeamName1], 
+    [Match_View].[TeamName2] AS [TeamName2]
+    FROM [dbo].[Match_View] AS [Match_View]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

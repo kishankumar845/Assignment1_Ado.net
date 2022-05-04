@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FIFAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FootBallLeague">
+          <Key>
+            <PropertyRef Name="MatchID" />
+          </Key>
+          <Property Name="MatchID" Type="int" Nullable="false" />
+          <Property Name="TeamName1" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TeamName2" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="MatchStatus" Type="varchar" MaxLength="30" />
+          <Property Name="WinningTeam" Type="varchar" MaxLength="30" />
+          <Property Name="Points" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FIFA.dbo.Match_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Match_View">
+          <Key>
+            <PropertyRef Name="TeamName1" />
+            <PropertyRef Name="TeamName2" />
+          </Key>
+          <Property Name="TeamName1" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TeamName2" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Function Name="spGetFootBallLeague" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="FIFAModelStoreContainer">
+          <EntitySet Name="FootBallLeague" EntityType="Self.FootBallLeague" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Match_View" EntityType="Self.Match_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Match_View].[TeamName1] AS [TeamName1], 
+    [Match_View].[TeamName2] AS [TeamName2]
+    FROM [dbo].[Match_View] AS [Match_View]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FIFAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FootBallLeague">
+          <Key>
+            <PropertyRef Name="MatchID" />
+          </Key>
+          <Property Name="MatchID" Type="Int32" Nullable="false" />
+          <Property Name="TeamName1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeamName2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MatchStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="WinningTeam" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Points" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Match_View">
+          <Key>
+            <PropertyRef Name="TeamName1" />
+            <PropertyRef Name="TeamName2" />
+          </Key>
+          <Property Name="TeamName1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeamName2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="FIFAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FootBallLeagues" EntityType="Self.FootBallLeague" />
+          <EntitySet Name="Match_View" EntityType="Self.Match_View" />
+          <FunctionImport Name="spGetFootBallLeague" ReturnType="Collection(FIFAModel.spGetFootBallLeague_Result)" />
+        </EntityContainer>
+        <ComplexType Name="spGetFootBallLeague_Result">
+          <Property Type="Int32" Name="MatchID" Nullable="false" />
+          <Property Type="String" Name="TeamName1" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="TeamName2" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="MatchStatus" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="WinningTeam" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="Points" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FIFAModelStoreContainer" CdmEntityContainer="FIFAEntities">
+          <EntitySetMapping Name="FootBallLeagues">
+            <EntityTypeMapping TypeName="FIFAModel.FootBallLeague">
+              <MappingFragment StoreEntitySet="FootBallLeague">
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+                <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+                <ScalarProperty Name="MatchStatus" ColumnName="MatchStatus" />
+                <ScalarProperty Name="WinningTeam" ColumnName="WinningTeam" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Match_View">
+            <EntityTypeMapping TypeName="FIFAModel.Match_View">
+              <MappingFragment StoreEntitySet="Match_View">
+                <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+                <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetFootBallLeague" FunctionName="FIFAModel.Store.spGetFootBallLeague">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FIFAModel.spGetFootBallLeague_Result">
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="TeamName1" ColumnName="TeamName1" />
+                <ScalarProperty Name="TeamName2" ColumnName="TeamName2" />
+                <ScalarProperty Name="MatchStatus" ColumnName="MatchStatus" />
+                <ScalarProperty Name="WinningTeam" ColumnName="WinningTeam" />
+                <ScalarProperty Name="Points" ColumnName="Points" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
